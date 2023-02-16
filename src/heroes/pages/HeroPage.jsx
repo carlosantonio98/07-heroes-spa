@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { getHeroesById } from '../helpers/gerHeroById';
 
 export const HeroPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();  // customHook creado por react-router-dom y nos sirve para acceder a los parametros de nuestra url que se almacenan en el Route.provider
-    const hero = getHeroesById( id );  // Es sumamente importate sacar esta variable fuera del funtional component dado el caso en el que si nuestro componente cambiara su estado y este se tuviera que tener que redibujar todos esto de nuevo. La variable se debe de sacar de aquí para no ejecutar la  función cada que este tenga un pequeño cambio, en este proyecto no lo sacaremos debido a que este no modifícara su estado.
+    // const hero = getHeroesById( id );  // Es sumamente importate sacar esta variable fuera del funtional component dado el caso en el que si nuestro componente cambiara su estado y este se tuviera que tener que redibujar todos esto de nuevo. La variable se debe de sacar de aquí para no ejecutar la  función cada que este tenga un pequeño cambio, en este proyecto no lo sacaremos debido a que este no modifícara su estado.
+    const hero = useMemo( ()=> getHeroesById( id ), [ id ])  // Memorizamos el valor del hero, no cambiara por nada en el mundo a menos de que el id de sus dependencias cambie, menorizamos para que no se redibuje todo el componente y no se vuelva a ejecutar esta función, solo cambiara si el id es modificado
 
     const onNavigateBack = () => {
         return navigate(-1);  // esto te lleva a la ruta anterior, esto no significa que no podamos hacer una condición mas elaborada

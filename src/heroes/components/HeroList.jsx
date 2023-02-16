@@ -1,9 +1,10 @@
 import { HeroCard } from './';  //componentes arriba y funciones abajo
 import { getHeroesByPublisher } from '../helpers/getHeroesByPublisher';
+import { useMemo } from 'react';
 
 export const HeroList = ({ publisher }) => {
     
-    const heroes = getHeroesByPublisher( publisher ); // No se usa el useState porque la información del json nunca va a cambiar
+    const heroes = useMemo( () => getHeroesByPublisher( publisher ), [ publisher ]); // No se usa el useState porque la información del json nunca va a cambiar
 
     return (
         <div className='row row-cols-1 row-cols-md-3 g-3'>
