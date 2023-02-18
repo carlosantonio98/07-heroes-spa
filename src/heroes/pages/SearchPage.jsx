@@ -10,16 +10,21 @@ export const SearchPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    
     const { q = '' } = queryString.parse( location.search );
     const heroes = getHeroesByName( q );
-
+    
+    const showSearch = ( q.length === 0 );
+    const showError  = ( q.length > 0 )  && heroes.length === 0;
+    
     const { searchText, onInputChange } = useForm({
         'searchText': q
     });
 
     const onSearchSubmit = (event) => {
         event.preventDefault();
-        if ( searchText.trim().length <= 1 ) return;
+
+        // if ( searchText.trim().length <= 1 ) return;
 
         navigate(`?q=${ searchText }`);  // Navega a la misma ruta y se le agregan los queryParameters
     }
@@ -56,11 +61,24 @@ export const SearchPage = () => {
                     <h4>Result</h4>
                     <hr />
 
-                    <div className="alert alert-primary">
+                    {/* MANERA 1
+                        { 
+                            ( q === '' ) 
+                                ? <div className="alert alert-primary">Search a hero</div>
+                                : ( heroes.length === 0 ) 
+                                    && <div className="alert alert-danger">No hero with <b>{ q }</b></div>
+                        }
+                    */}
+                    
+                    
+                    {/* MANERA 2 = Hay que procurar la legibilida */}
+                    <div className="alert alert-primary animate__animated animate__fadeIn" 
+                        style={{ display: showSearch ? '' : 'none' }}>
                         Search a hero
                     </div>
                     
-                    <div className="alert alert-danger">
+                    <div className="alert alert-danger animate__animated animate__fadeIn"
+                        style={{ display: showError ? '' : 'none' }}>
                         No hero with <b>{ q }</b>
                     </div>
 
