@@ -33,13 +33,26 @@ export const AuthProvider = ({ children }) => {
 
         dispatch( action );
     }
+    
+    const logout = () => {
+        const action = {
+            type: types.logout,
+        }
+
+        localStorage.removeItem( 'user' ); // removemos el usuario
+
+        dispatch( action );
+    }
 
 
     // No pasamos el dispatch directo a los hijos para no darle acceso total de esto
     return (
         <AuthContext.Provider value={{
             ...authState,  // hay que tener cuidado al hacer esto ya que si dentro del authState hay algo llamado igual al login este se podría sobreescribir
-            login: login
+            
+            // Methods
+            login,
+            logout,
         }}>
             { children }
         </AuthContext.Provider>
