@@ -9,7 +9,7 @@ export const authReducer = ( state = {}, action ) => {
             return {
                 ...state,  // se recomienda poner esto así para mantener el estado anterior y solo reemplazamos lo que realmente nos interesa, porque por ejemplo podriamos tener una configuración en nuestro estado que no nos gustaría perder, entonces así nos evitamos de hacer modificaciones a este reducer el día de mañana
                 logged: true,
-                name: action.payload
+                user: action.payload
             };
         
         case types.logout:
