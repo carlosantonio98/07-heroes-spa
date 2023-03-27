@@ -8,9 +8,12 @@ export const LoginPage = () => {
     const navigate = useNavigate();
 
     const onLogin = () => {
+
+        const lastPath = localStorage.getItem('lastPath') || '/';  // leemos el lastPath del localStorage para redirigirnos a la ultima ruta a la que accedimos cuando estabamos loggeado.
+
         login( 'Carlos Camacho' );
 
-        navigate('/', {
+        navigate( lastPath, {
             replace: true  // colocamos el replace: true para que ya no regresemos al login si ya lo pasamos, le decimos que borre el historial
         });
     }
